@@ -1,9 +1,12 @@
 import * as express from 'express';
 import { Blog } from './blog.model';
+import { Comment } from '../comments/comment.model';
 
 export function getAll(req: express.Request, res: express.Response, next: Function) {
   Blog
     .find({ })
+    .select('-postedBy')
+    .populate('comments', 'text postedBy')
     .exec((err, blogs) => {
       if (err) return next(err);
       res.json(blogs);
@@ -42,6 +45,13 @@ export function update(req: express.Request, res: express.Response, next: Functi
 
 export function remove(req: express.Request, res: express.Response, next: Function) {
   Blog.remove({ _id: req.params.id }, (err) => {
+    if (err) return next(err);
+    next();
+  });
+}
+
+export function removeBlogComments(req: express.Request, res: express.Response, next: Function) {
+  Comment.remove({ Blog: req.params.id }, (err) => {
     if (err) return next(err);
     res.json({ success: true });
   });

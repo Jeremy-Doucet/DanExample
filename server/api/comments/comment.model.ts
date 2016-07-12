@@ -6,7 +6,7 @@ let commentSchema = new mongoose.Schema({
   text: String,
   postedBy: String,
   timePosted: Number,
-  Blog: { type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }
+  blog: { type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }
 });
 
 export let Comment = mongoose.model<ICommentModel>('Comment', commentSchema);

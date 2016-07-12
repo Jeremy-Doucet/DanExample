@@ -15,6 +15,6 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 
 // DELETE: /api/blogs/5
-router.delete('/:id', controller.remove);
+router.delete('/:id', controller.remove, controller.removeBlogComments);
 
 export = router;

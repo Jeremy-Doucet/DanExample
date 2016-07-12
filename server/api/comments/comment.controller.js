@@ -3,15 +3,16 @@ var comment_model_1 = require('./comment.model');
 var blog_model_1 = require('../blogs/blog.model');
 function create(req, res, next) {
     var c = new comment_model_1.Comment(req.body);
-    c.Blog = req.params.blogId;
+    c.blog = req.params.blogId;
     c.save(function (err, comment) {
         if (err)
             return next(err);
-        blog_model_1.Blog.update({ _id: req.params.blogId }, { $push: { Comments: c._id } }, function (err, result) {
+        blog_model_1.Blog.update({ _id: c.blog }, { $push: { comments: c._id } }, function (err, result) {
             if (err)
                 return next(err);
+            console.log(c);
             if (result.nModified === 0)
-                return next({ status: 404, message: "Could not update blog, with an id of: " + req.params.id });
+                return next({ status: 404, message: "Could not update blog, with an id of: " + req.params.blogId });
             res.json(comment);
         });
     });
@@ -33,7 +34,7 @@ function remove(req, res, next) {
             return next(err);
         if (!result)
             return next({ status: 404, message: "Could not remove comment, with an id of: " + req.params.id });
-        blog_model_1.Blog.update({ _id: result.Blog }, { $pull: { Comments: result._id } }, function (err, result) {
+        blog_model_1.Blog.update({ _id: result.blog }, { $pull: { comments: result._id } }, function (err, result) {
             if (err)
                 return next(err);
             res.json({ success: true });

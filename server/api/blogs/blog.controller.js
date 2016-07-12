@@ -1,8 +1,11 @@
 "use strict";
 var blog_model_1 = require('./blog.model');
+var comment_model_1 = require('../comments/comment.model');
 function getAll(req, res, next) {
     blog_model_1.Blog
         .find({})
+        .select('-postedBy')
+        .populate('comments', 'text postedBy')
         .exec(function (err, blogs) {
         if (err)
             return next(err);
@@ -48,7 +51,15 @@ function remove(req, res, next) {
     blog_model_1.Blog.remove({ _id: req.params.id }, function (err) {
         if (err)
             return next(err);
-        res.json({ success: true });
+        next();
     });
 }
 exports.remove = remove;
+function removeBlogComments(req, res, next) {
+    comment_model_1.Comment.remove({ Blog: req.params.id }, function (err) {
+        if (err)
+            return next(err);
+        res.json({ success: true });
+    });
+}
+exports.removeBlogComments = removeBlogComments;
