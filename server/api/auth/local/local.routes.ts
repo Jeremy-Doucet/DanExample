@@ -4,5 +4,7 @@ const router = express.Router();
 
 // POST: /api/auth/local/register
 router.post('/register', controller.register);
+// POST: /api/auth/local/login
+router.post('/login', controller.login);
 
 export = router;

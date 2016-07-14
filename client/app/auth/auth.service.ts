@@ -6,6 +6,18 @@ namespace app.services {
 			username: null
 		}
 
+		public login(u: IUser) {
+			let q = this.$q.defer();
+			this.$http.post('/api/auth/local/login', u).then((res) => {
+				this.setToken(res.data['token']);
+				this.setUser();
+				q.resolve();
+			}, (err) => {
+				q.reject();
+			});
+			return q.promise;
+		}
+
 		public register(u: IUser) {
 			let q = this.$q.defer();
 			this.$http.post('/api/auth/local/register', u).then((res) => {

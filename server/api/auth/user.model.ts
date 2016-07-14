@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 
 export interface IUserModel extends IUser, mongoose.Document {
   hashPassword(password: string, callback: (err: any, hashedPassword: string) => any);
+  comparePassword(password: string, callback: (err: any, isMatch: boolean) => any);
   createJWT(): string;
 }
 
@@ -22,6 +23,13 @@ userSchema.methods.hashPassword = function(password, cb) {
   crypto.pbkdf2(password, this.salt, 1000, 32, function(err, buff) {
     if (err) return cb(err);
     cb(null, buff.toString('hex'));
+  });
+}
+
+userSchema.methods.comparePassword = function(password, cb) {
+  crypto.pbkdf2(password, this.salt, 1000, 32, (err, buff) => {
+    if (err) return cb(err);
+    cb(null, buff.toString('hex') === this.password);
   });
 }
 

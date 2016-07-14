@@ -17,6 +17,14 @@ userSchema.methods.hashPassword = function (password, cb) {
         cb(null, buff.toString('hex'));
     });
 };
+userSchema.methods.comparePassword = function (password, cb) {
+    var _this = this;
+    crypto.pbkdf2(password, this.salt, 1000, 32, function (err, buff) {
+        if (err)
+            return cb(err);
+        cb(null, buff.toString('hex') === _this.password);
+    });
+};
 userSchema.methods.createJWT = function () {
     return jwt.sign({
         _id: this._id,

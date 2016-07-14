@@ -14,6 +14,18 @@ var app;
                 if (this.getToken())
                     this.setUser();
             }
+            AuthService.prototype.login = function (u) {
+                var _this = this;
+                var q = this.$q.defer();
+                this.$http.post('/api/auth/local/login', u).then(function (res) {
+                    _this.setToken(res.data['token']);
+                    _this.setUser();
+                    q.resolve();
+                }, function (err) {
+                    q.reject();
+                });
+                return q.promise;
+            };
             AuthService.prototype.register = function (u) {
                 var _this = this;
                 var q = this.$q.defer();

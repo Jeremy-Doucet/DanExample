@@ -1,6 +1,21 @@
 "use strict";
 var user_model_1 = require('../user.model');
 function login(req, res, next) {
+    user_model_1.User
+        .findOne({ username: req.body.username })
+        .exec(function (err, result) {
+        if (err)
+            return next(err);
+        if (!result)
+            return next({ status: 400, message: 'bad username/password combination' });
+        result.comparePassword(req.body.password, function (err, isMatch) {
+            if (err)
+                return next(err);
+            if (!isMatch)
+                return next({ status: 400, message: 'bad username/password combination' });
+            res.json({ token: result.createJWT() });
+        });
+    });
 }
 exports.login = login;
 function register(req, res, next) {
