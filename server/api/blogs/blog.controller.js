@@ -4,8 +4,6 @@ var comment_model_1 = require('../comments/comment.model');
 function getAll(req, res, next) {
     blog_model_1.Blog
         .find({})
-        .select('-postedBy')
-        .populate('comments', 'text postedBy')
         .exec(function (err, blogs) {
         if (err)
             return next(err);
@@ -16,6 +14,7 @@ exports.getAll = getAll;
 function getOne(req, res, next) {
     blog_model_1.Blog
         .findOne({ _id: req.params.id })
+        .populate('comments')
         .exec(function (err, blog) {
         if (err)
             return next(err);

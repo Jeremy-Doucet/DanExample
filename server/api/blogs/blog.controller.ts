@@ -5,8 +5,6 @@ import { Comment } from '../comments/comment.model';
 export function getAll(req: express.Request, res: express.Response, next: Function) {
   Blog
     .find({ })
-    .select('-postedBy')
-    .populate('comments', 'text postedBy')
     .exec((err, blogs) => {
       if (err) return next(err);
       res.json(blogs);
@@ -16,6 +14,7 @@ export function getAll(req: express.Request, res: express.Response, next: Functi
 export function getOne(req: express.Request, res: express.Response, next: Function) {
   Blog
     .findOne({ _id: req.params.id })
+    .populate('comments')
     .exec((err, blog) => {
       if (err) return next(err);
       if (!blog) return next({ status: 404, message: `Could not find a blog with an id of: ${req.params.id}`});

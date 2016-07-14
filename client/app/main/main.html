@@ -1,0 +1,12 @@
+<h1 class="hcenter" style="display: inline-block;">See all of our blogs!</h1>
+<h4 style="float:right; display: inline-block; line-height: 75px;">
+	<a ui-sref="blog create">Create a Blog</a>
+</h4>
+<hr>
+<div class="well" ng-repeat="b in vm.blogs">
+	<h2>{{b.title}}</h2>
+	<div class="row">
+	<h4 class="col-sm-6">{{b.postedBy || 'N/A'}} - {{b.timePosted | date:'medium'}}</h4>
+	<h4 class="col-sm-6"><span style="float:right;">{{b.comments.length}} comments</span></h4>
+	</div>
+</div>

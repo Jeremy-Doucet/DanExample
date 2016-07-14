@@ -1,8 +1,9 @@
 interface IBlog {
   _id: any;
   title: String;
+  content: String;
   timePosted: Number;
-  postedBy: String;
 
-  Comments: Array<string|IComment>
+  postedBy: string|IUser;
+  comments: Array<string|IComment>;
 }

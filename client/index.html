@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Blog</title>
+	<base href="/">
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/slate/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/client/site.css">
+</head>
+<body>
+	<div ui-view="" class="container"></div>
+	
+
+	<script src="/lib/angular/angular.min.js"></script>
+	<script src="/lib/angular-resource/angular-resource.min.js"></script>
+	<script src="/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+	<script src="/client/app/app.js"></script>
+	<script src="/client/app/main/main.module.js"></script>
+	<script src="/client/app/blogs/blog.module.js"></script>
+
+	<script src="/client/app/blogs/blog.service.js"></script>
+	<script src="/client/app/blogs/create/blog.create.controller.js"></script>
+
+	<script src="/client/app/main/main.controller.js"></script>
+</body>
+</html>
