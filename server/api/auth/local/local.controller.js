@@ -12,7 +12,7 @@ function register(req, res, next) {
         u.save(function (err, result) {
             if (err)
                 return next(err);
-            res.redirect('/welcome?code=' + u.createJWT());
+            res.json({ token: u.createJWT() });
         });
     });
 }

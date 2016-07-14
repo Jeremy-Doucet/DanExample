@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var userSchema = new mongoose.Schema({
-    username: String,
+    username: { type: String, unique: true, sparse: true, lowercase: true, trim: true },
     password: String,
     salt: String,
     blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }],
@@ -18,7 +18,7 @@ userSchema.methods.hashPassword = function (password, cb) {
     });
 };
 userSchema.methods.createJWT = function () {
-    jwt.sign({
+    return jwt.sign({
         _id: this._id,
         username: this.username
     }, 'secret');

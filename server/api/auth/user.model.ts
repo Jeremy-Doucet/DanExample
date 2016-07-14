@@ -6,9 +6,10 @@ export interface IUserModel extends IUser, mongoose.Document {
   hashPassword(password: string, callback: (err: any, hashedPassword: string) => any);
   createJWT(): string;
 }
-// TODO: add validation for unique users
+
+// TODO: sparse is not setting unique properly
 let userSchema = new mongoose.Schema({
-  username: String,
+  username: { type: String, unique: true, sparse: true, lowercase: true, trim: true },
   password: String,
   salt: String,
 
@@ -26,7 +27,7 @@ userSchema.methods.hashPassword = function(password, cb) {
 
 // TODO: change JWT secret before publishing
 userSchema.methods.createJWT = function() {
-  jwt.sign({
+  return jwt.sign({
     _id: this._id,
     username: this.username
   }, 'secret');

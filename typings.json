@@ -8,6 +8,7 @@
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-jwt": "registry:dt/express-jwt#0.0.0+20160629014920",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160711183608",
+    "express-unless": "registry:dt/express-unless#0.0.0+20160317120654",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",
     "jsonwebtoken": "registry:dt/jsonwebtoken#0.0.0+20160627133958",
     "mime": "registry:dt/mime#0.0.0+20160316155526",

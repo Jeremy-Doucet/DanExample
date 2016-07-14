@@ -11,7 +11,7 @@ export function register(req: express.Request, res: express.Response, next: Func
     u.password = hash;
     u.save((err, result) => {
       if (err) return next(err);
-      res.redirect('/welcome?code=' + u.createJWT());
+      res.json({ token: u.createJWT() });
     });
   });
 }
